@@ -148,10 +148,9 @@ public class Dungeon implements Serializable {
      *
      * @param withPrompt Set to <code>true</code>, if you want a prompt.
      */
-    public void runGame(boolean withPrompt) {
-        currentRoomNumber = 1;
-        initDoorSchalter();
-        getCurrentRaum().start(withPrompt);
+    public void runGame() {
+    	initializeGame();
+        getCurrentRaum().start(true);
 
 
         while (player.isAlive()) {
@@ -160,11 +159,42 @@ public class Dungeon implements Serializable {
             } else {
                 Raum raum = getNextRoom(currentRoomNumber);
                 raum.setLeaveRoom(false);
-                raum.start(withPrompt);
+                raum.start(true);
             }
         }
         Textie.ende();
     }
+    
+    
+    private boolean firstTestRun = true;
+    
+    public void runGameTest() {
+    	if (firstTestRun == true) {
+    		// TODO In der Initialisierung Block verschieben.
+    		// Dann kann auch die unterscheidung weg fallen.
+    		firstTestRun = false;
+    		initializeGame();
+    	}
+    	
+    	if (player.isAlive()) {
+            if (getCurrentRaum().isLeaveRoom() == false) {
+                return;
+            } else {
+                Raum raum = getNextRoom(currentRoomNumber);
+                raum.setLeaveRoom(false);
+                raum.start(false);
+                return;
+            }
+        }
+        Textie.ende();
+    	
+    }
+
+
+	private void initializeGame() {
+		currentRoomNumber = 1;
+        initDoorSchalter();
+	}
 
     /**
      * Initializes the rooms.
