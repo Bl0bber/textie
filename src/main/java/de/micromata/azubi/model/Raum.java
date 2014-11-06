@@ -18,9 +18,13 @@ public class Raum implements Serializable{
     protected boolean leaveRoom = false;
     protected Inventory inventory;
     private Human human;
+    private Dungeon dungeon;
     private ArrayList<Door> doors = new ArrayList<>();
+    private Ghost ghost;
 
-    public Raum() {
+
+    public Raum(Dungeon dungeon) {
+        this.dungeon = dungeon;
     }
 
   /**
@@ -28,7 +32,8 @@ public class Raum implements Serializable{
    * @param number The number of the room
    * @param willkommensNachricht The message you get, when you enter the room.
    */
-    public Raum(int number, String willkommensNachricht) {
+    public Raum(int number, String willkommensNachricht, Dungeon dung) {
+        this(dung);
         this.roomNumber = number;
         this.willkommensNachricht = willkommensNachricht;
     }
@@ -50,12 +55,12 @@ public class Raum implements Serializable{
         if (roomNumber == 3) {
             ToggleItem fackel = (ToggleItem) inventory.findItemByName("Fackel");
             if (fackel != null && fackel.getState() == true) {
-                Textie.printText("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
+                Textie.printText("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.", dungeon);
                 fackel.setState(false);
             }
         }
-        Textie.printText(willkommensNachricht);
-        Textie.warten(withPrompt);
+        Textie.printText(willkommensNachricht, dungeon);
+        Textie.warten(this.dungeon, withPrompt);
     }
 
 
@@ -179,4 +184,9 @@ public class Raum implements Serializable{
     public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
     }
+
+    public void setGhost(Ghost ghost) {
+        this.ghost = ghost;
+    }
+
 }

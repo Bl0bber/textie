@@ -1,5 +1,7 @@
 package de.micromata.azubi.model;
 
+import de.micromata.azubi.Textie;
+
 import java.io.Serializable;
 
 public class Item implements Serializable{
@@ -19,10 +21,10 @@ public class Item implements Serializable{
     private static final long serialVersionUID = -2308071724210324323L;
     private String benutzeText;
     private String name;
-    private boolean pickable; //TODO kommt raus
     private String untersucheText;
     private int itemID;
     private long uid;
+    private boolean pickable; // FIXME muss eigentlich wieder raus
 
     public int getItemID() {
         return itemID;
@@ -40,23 +42,25 @@ public class Item implements Serializable{
    * @param name Item name
    * @param untersucheText Text which is printed when you inspect the item.
    * @param benutzeText Text which is printed when you use the item.
-   * @param pickable Is the item pickable?
+   * @deprecated Use the builder instead
    */
-    public Item(int itemID, String name, String untersucheText, String benutzeText, boolean pickable) {
+    public Item(int itemID, String name, String untersucheText, String benutzeText) {
         this.itemID = itemID;
-
         this.name = name;
         this.untersucheText = untersucheText;
         this.benutzeText = benutzeText;
-        this.pickable = pickable;
     }
 
   /**
    *
    * @return Returns true if the Item is pickable
    */
-    public boolean isPickable() {
-        return this.pickable;
+    public boolean isPickable() { //FIXME !!
+        if(pickable == true){
+            return true;
+        }else{
+            return false;
+        }
     }
 
   /**
@@ -73,7 +77,7 @@ public class Item implements Serializable{
    * prints the benutzeText
    */
     public void benutzen() {
-        System.out.println(benutzeText);
+        Textie.printText(benutzeText);
     }
 
   /**
@@ -84,7 +88,7 @@ public class Item implements Serializable{
             // TODO itemgeschlechter hinzufügen und Text anpassen
             System.out.println("Da ist ein/e " + this.getName() + ".");
         }
-        System.out.println(untersucheText);
+        Textie.printText(untersucheText);
     }
 
   /**
@@ -121,20 +125,20 @@ public class Item implements Serializable{
         return benutzeText;
     }
 
-    public void setBenutzeText(String benutzeText) {
-        this.benutzeText = benutzeText;
-    }
-
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setPickable(boolean pickable) {
-        this.pickable = pickable;
-    }
-
     public void setUid(long uid) {
         this.uid = uid;
+    }
+
+
+    public void setBenutzeText(String benutzeText) {
+        this.benutzeText = benutzeText;
+    }
+
+    public void setPickable(boolean pickable) {
+        this.pickable = pickable;
     }
 }
