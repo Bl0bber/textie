@@ -14,6 +14,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 
+
+import de.micromata.azubi.Command;
 import de.micromata.azubi.model.Dungeon;
 import de.micromata.azubi.model.Inventory;
 import de.micromata.azubi.model.Item;

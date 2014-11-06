@@ -1,7 +1,10 @@
 package de.micromata.azubi.builder;
 
 import de.micromata.azubi.Utils;
-import de.micromata.azubi.model.*;
+import de.micromata.azubi.model.Door;
+import de.micromata.azubi.model.Raum;
+import de.micromata.azubi.model.Richtung;
+
 
 /**
  * Created by jsiebert on 30.10.14.

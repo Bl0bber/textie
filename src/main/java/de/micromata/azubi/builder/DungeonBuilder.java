@@ -2,9 +2,6 @@ package de.micromata.azubi.builder;
 
 import de.micromata.azubi.model.Dungeon;
 
-/**
- * Created by jsiebert on 30.10.14.
- */
 import java.util.ArrayList;
 import java.util.List;
 
