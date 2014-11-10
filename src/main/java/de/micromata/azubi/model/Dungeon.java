@@ -142,7 +142,7 @@ public class Dungeon implements Serializable {
                 raum.start(true);
             }
         }
-        Textie.ende(this);
+        Textie.ende();
     }
     
     
@@ -166,7 +166,7 @@ public class Dungeon implements Serializable {
                 return;
             }
         }
-        Textie.ende(this);
+        Textie.ende();
     }
 
 
@@ -223,7 +223,7 @@ public class Dungeon implements Serializable {
         Raum currentRaum = getCurrentRaum();
         Door door = currentRaum.findDoorByDirection(richtung);
         if (door == null) {
-            Textie.printText("Diese Richtung gibt es nicht.", this);
+            Textie.printText("Diese Richtung gibt es nicht.");
 
         } else {
             Raum nextRoom = currentRaum.getNextRoom(door);
@@ -236,9 +236,9 @@ public class Dungeon implements Serializable {
                     */
                 if (door.isLocked() == true) {
                     currentRaum.setLeaveRoom(false);
-                    Textie.printText("Tür verschlossen.", this);
+                    Textie.printText("Tür verschlossen.");
                 } else {
-                    Textie.printText("Du öffnest die Tür", this);
+                    Textie.printText("Du öffnest die Tür");
                     currentRoomNumber = nextRoom.getRoomNumber();
                     currentRaum.setLeaveRoom(true);
 
@@ -254,7 +254,7 @@ public class Dungeon implements Serializable {
                     return getNextRoom(currentRoomNumber);
                 }
             } else {
-                Textie.printText("Du bist gegen die Wand gelaufen.", this);
+                Textie.printText("Du bist gegen die Wand gelaufen.");
             }
         }
         return null;
@@ -284,7 +284,7 @@ public class Dungeon implements Serializable {
         if (Textie.chooseInventory("Schalter", this).isToggle()) {
             ToggleItem schalter = (ToggleItem) Textie.chooseInventory("Schalter", this);
             if (schalter.getState() == false) {
-                Textie.printText("Da ist eine Tür, du versuchst sie zu öffnen, doch es geht nicht.", this);
+                Textie.printText("Da ist eine Tür, du versuchst sie zu öffnen, doch es geht nicht.");
                 return false;
             } else {
                 return true;
@@ -321,14 +321,14 @@ public class Dungeon implements Serializable {
      */
     public void doGehen(Richtung richtung) {
         if (this.getCurrentRaum().getRoomNumber() == 6 && this.getCurrentRaum().getNextRoom(this.getCurrentRaum().findDoorByDirection(richtung)) == null) {
-            Textie.printText("Der Weg wird durch eine Holzbarrikade versperrt.", this);
+            Textie.printText("Der Weg wird durch eine Holzbarrikade versperrt.");
         } else {
             int roomNumber = this.getCurrentRaum().getRoomNumber();
             Raum nextRoom = this.getRaum(richtung);
             if (nextRoom != null && this.findRaumByNummer(roomNumber).isLeaveRoom()) {
                 this.setRoomNumber(nextRoom);
                 this.getCurrentRaum().setLeaveRoom(false);
-                Textie.printText(this.getCurrentRaum().getWillkommensNachricht(), this);
+                Textie.printText(this.getCurrentRaum().getWillkommensNachricht());
             }
         }
 
@@ -344,14 +344,14 @@ public class Dungeon implements Serializable {
     public void doVernichte(Item item, int count) {
         if (count == 2) {
             if (this.getPlayer().getInventory().transferItem(this.getCurrentRaum().getInventory(), item)) {
-                Textie.printText(item.getName() + " vernichtet.", this);
+                Textie.printText(item.getName() + " vernichtet.");
                 return;
             } else {
-                Textie.printText("Entweder das Objekt gibt es nicht, oder es ist nicht im Inventar.", this);
+                Textie.printText("Entweder das Objekt gibt es nicht, oder es ist nicht im Inventar.");
                 return;
             }
         } else {
-            Textie.printText("Was soll vernichtet werden?", this);
+            Textie.printText("Was soll vernichtet werden?");
         }
     }
 
@@ -363,7 +363,7 @@ public class Dungeon implements Serializable {
      */
     public void doUntersuche(String[] parsed_command, int count) {
         if (count != 2) {
-            Textie.printText("Was soll untersucht werden?", this);
+            Textie.printText("Was soll untersucht werden?");
         } else {
             switch (parsed_command[1].toLowerCase()) {
                 case "raum":
@@ -372,14 +372,14 @@ public class Dungeon implements Serializable {
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == true) {
-                                Textie.printText("Im Raum befindet sich:", this);
+                                Textie.printText("Im Raum befindet sich:");
                                 this.getCurrentRaum().getInventory().listItems(this);
                             } else {
-                                Textie.printText("Du kannst nichts sehen!", this);
+                                Textie.printText("Du kannst nichts sehen!");
                             }
                         }
                     } else {
-                        Textie.printText("Im Raum befindet sich:", this);
+                        Textie.printText("Im Raum befindet sich:");
                         this.getCurrentRaum().getInventory().listItems(this);
                     }
                     break;
@@ -389,24 +389,24 @@ public class Dungeon implements Serializable {
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == false) {
-                                Textie.printText("Du kannst nichts sehen!", this);
+                                Textie.printText("Du kannst nichts sehen!");
                             } else {
-                                Textie.printText("In deiner Tasche befindet sich:", this);
+                                Textie.printText("In deiner Tasche befindet sich:");
                                 this.getPlayer().getInventory().listItems(this);
                             }
                         }
                     } else {
-                        Textie.printText("In deiner Tasche befindet sich:", this);
+                        Textie.printText("In deiner Tasche befindet sich:");
                         this.getPlayer().getInventory().listItems(this);
                     }
                     break;
                 case "truhe":
                     if (this.getCurrentRaum().getInventory().hasItem("Truhe") == false) {
-                        Textie.printText("Hier ist keine Truhe", this);
+                        Textie.printText("Hier ist keine Truhe");
                     } else {
                         StorageItem truhe = (StorageItem) this.getCurrentRaum().getInventory().findItemByName("Truhe");
                         if (truhe.getLockState() == true) {
-                            Textie.printText("Die Truhe ist verschlossen.", this);
+                            Textie.printText("Die Truhe ist verschlossen.");
                         } else {
                             truhe.getInventory().listItems(this);
                         }
@@ -418,11 +418,11 @@ public class Dungeon implements Serializable {
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == false) {
-                                Textie.printText("Du kannst nichts sehen!", this);
+                                Textie.printText("Du kannst nichts sehen!");
                             } else {
                                 Item itemUSU = Textie.chooseInventory(parsed_command[1], this);
                                 if (itemUSU == null) {
-                                    Textie.printText("Das Objekt gibt es nicht.", this);
+                                    Textie.printText("Das Objekt gibt es nicht.");
                                 } else {
                                     itemUSU.untersuchen();
                                 }
@@ -446,15 +446,15 @@ public class Dungeon implements Serializable {
      */
     public void doBenutze(Item item) {
         if (item == null) {
-            Textie.printText("Das Item gibt es nicht.", this);
+            Textie.printText("Das Item gibt es nicht.");
         } else {
             Inventory raumInventar = this.getCurrentRaum().getInventory();
             Inventory playerInventory = this.getPlayer().getInventory();
             if (item.isPickable() == false || playerInventory.hasItem(item.getName())) {
                 String itemName = item.getName();
-                if (Textie.diag == true) {
-                    Textie.printText("Du willst " + itemName + " benutzen", this);
-                }
+//                if (Textie. diag == true) {
+//                  FIXME  Textie.printText("Du willst " + itemName + " benutzen");
+//                }
                 switch (itemName) {
                     // Fackel und Feuerzeug sind besonders, da sie auch funktionen
                     // aufrufen
@@ -465,13 +465,13 @@ public class Dungeon implements Serializable {
                         int fackelSlot = playerInventory.findItem(playerInventory.findItemByName("Fackel"));
                         int feuerZeugSlot = playerInventory.findItem(playerInventory.findItemByName("Feuerzeug"));
                         if (feuerZeugSlot < 0) {
-                            Textie.printText("Du hast kein Feuerzeug.", this);
+                            Textie.printText("Du hast kein Feuerzeug.");
                             break;
                         } else if (fackelSlot < 0) {
-                            Textie.printText("Du hast keine Fackel.", this);
+                            Textie.printText("Du hast keine Fackel.");
                             break;
                         } else {
-                            Textie.printText("Du zündest deine Fackel mit dem Feuerzeug an.", this);
+                            Textie.printText("Du zündest deine Fackel mit dem Feuerzeug an.");
                             Item item2 = playerInventory.findItemByName("Fackel");
                             if (item2 instanceof ToggleItem) {
                                 ToggleItem fackel = (ToggleItem) item2;
@@ -486,18 +486,18 @@ public class Dungeon implements Serializable {
                             fackel = (ToggleItem) item5;
                         }
                         if (fackel != null && fackel.getState() == false && this.getCurrentRaum().getRoomNumber() == 3) {
-                            Textie.printText("Du kannst nichts sehen!", this);
+                            Textie.printText("Du kannst nichts sehen!");
                         } else {
-                            Item itemToUse = item;
-                            if (itemToUse == null) {
-                                Textie.printText("Das Objekt gibt es nicht.", this);
-                                break;
-                            } else {
+//                            Item itemToUse = item;
+//               DEAD CODE          if (itemToUse == null) {
+//                                Textie.printText("Das Objekt gibt es nicht.");
+//                                break;
+//                            } else {
                                 if (raumInventar.hasItem("Falltür")) {
-                                    Textie.printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.", this);
+                                    Textie.printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
                                     doGehen(Richtung.FALLTUER);
                                     break;
-                                }
+//                                }
                             }
                             break;
                         }
@@ -505,7 +505,7 @@ public class Dungeon implements Serializable {
                     case "Axt":
                         Item axt = item;
                         if (this.getCurrentRaum().getRoomNumber() != 6) {
-                            Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum", this);
+                            Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
                         } else {
                             this.getCurrentRaum().getDoors().add(new DoorBuilder().setRichtung(Richtung.OST).setLock(false).setNextRoom(this.findRaumByNummer(7)).build().get());
                             axt.benutzen();
@@ -528,21 +528,21 @@ public class Dungeon implements Serializable {
                     case "Schwert":
                         playerInventory.findItemByName("Schwert").benutzen();
                         this.getPlayer().setAlive(false);
-                        Textie.ende(this);
+                        Textie.ende();
                         break;
                     case "Schlüssel":
                         StorageItem truhe = (StorageItem) raumInventar.findItemByName("Truhe");
                         if (raumInventar.hasItem("Truhe")) {
                             if (truhe.getLockState() == true) {
                                 truhe.setLockState(false);
-                                Textie.printText("Du öffnest die Truhe mit dem Schlüssel.", this);
+                                Textie.printText("Du öffnest die Truhe mit dem Schlüssel.");
                                 break;
                             } else {
-                                Textie.printText("Die Truhe ist bereits aufgeschlossen.", this);
+                                Textie.printText("Die Truhe ist bereits aufgeschlossen.");
                                 break;
                             }
                         } else {
-                            Textie.printText("Hier gibt es nichts, was man aufschließen könnte.", this);
+                            Textie.printText("Hier gibt es nichts, was man aufschließen könnte.");
                             break;
                         }
                     default:
@@ -551,27 +551,27 @@ public class Dungeon implements Serializable {
                             if (item5 instanceof ToggleItem) {
                                 fackel = (ToggleItem) item5;
                                 if (fackel.getState() == true) {
-                                    Item itemToUse = item;
-                                    if (itemToUse == null) {
-                                        Textie.printText("Das Objekt gibt es nicht.", this);
-                                    } else {
-                                        itemToUse.benutzen();
-                                    }
+//                                    Item itemToUse = item;
+//             DEAD CODE                       if (itemToUse == null) {
+//                                        Textie.printText("Das Objekt gibt es nicht.");
+//                                    } else {
+                                        item.benutzen();
+//                                    }
                                 } else {
-                                    Textie.printText("Du kannst nichts sehen!", this);
+                                    Textie.printText("Du kannst nichts sehen!");
                                 }
                             }
                         } else {
-                            Item itemToUse = item;
-                            if (itemToUse == null) {
-                                Textie.printText("Das Objekt gibt es nicht.", this);
-                            } else {
-                                itemToUse.benutzen();
-                            }
+//                            Item itemToUse = item;
+//                            if (itemToUse == null) {
+//         DEAD CODE               Textie.printText("Das Objekt gibt es nicht.");
+//                            } else {
+                            item.benutzen();
+//                            }
                         }
                 }
             } else {
-                Textie.printText("Du musst das Item im Inventar haben.", this);
+                Textie.printText("Du musst das Item im Inventar haben.");
             }
         }
     }
@@ -585,12 +585,12 @@ public class Dungeon implements Serializable {
         if (item.isPickable()) {
             if (addItemFromChestToInventory(item, this)) {
 
-                Textie.printText(item.getName() + " zum Inventar hinzugefügt.", this);
+                Textie.printText(item.getName() + " zum Inventar hinzugefügt.");
             } else {
-                Textie.printText("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.", this);
+                Textie.printText("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
             }
         } else {
-            Textie.printText("Du kannst dieses Item nicht aufheben.", this);
+            Textie.printText("Du kannst dieses Item nicht aufheben.");
         }
     }
 
@@ -601,17 +601,17 @@ public class Dungeon implements Serializable {
      */
     public void doNimm(Item item) {
         if (item == null) {
-            Textie.printText("Unbekanntes Item.", this);
+            Textie.printText("Unbekanntes Item.");
         } else {
             if (item.isPickable()) {
                 if (this.getCurrentRaum().getInventory().transferItem(this.getPlayer().getInventory(), item)) {
 
-                    Textie.printText(item.getName() + " zum Inventar hinzugefügt.", this);
+                    Textie.printText(item.getName() + " zum Inventar hinzugefügt.");
                 } else {
-                    Textie.printText("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.", this);
+                    Textie.printText("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
                 }
             } else {
-                Textie.printText("Du kannst dieses Item nicht aufheben.", this);
+                Textie.printText("Du kannst dieses Item nicht aufheben.");
             }
         }
     }
@@ -630,22 +630,22 @@ public class Dungeon implements Serializable {
                 Item item = Textie.chooseInventory(parsed_command[1], this);
                 boolean isRemoved = this.getPlayer().getInventory().removeItem(item);
                 if (isRemoved == true) {
-                    Textie.printText(this.getCurrentRaum().getHuman().getQuestDoneText(), this);
+                    Textie.printText(this.getCurrentRaum().getHuman().getQuestDoneText());
                     this.getCurrentRaum().getHuman().setQuestDone(true);
                     if (Textie.recieveItem(this.getCurrentRaum().getHuman().getRewarditem(), player.getInventory())) {
-                        Textie.printText("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.", this);
+                        Textie.printText("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.");
                     } else {
-                        Textie.printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.", this);
+                        Textie.printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
                         this.getCurrentRaum().getHuman().setGaveItem(true);
                     }
                 } else {
-                    Textie.printText("Item nicht im Inventar.", this);
+                    Textie.printText("Item nicht im Inventar.");
                 }
             } else {
-                Textie.printText("Das brauche ich nicht.", this);
+                Textie.printText("Das brauche ich nicht.");
             }
         } else {
-            Textie.printText("Zu wenig Argumente", this);
+            Textie.printText("Zu wenig Argumente");
         }
     }
 
@@ -656,27 +656,27 @@ public class Dungeon implements Serializable {
         if (this.getCurrentRaum().getHuman().isQuestDone() == true) {
             if (this.getCurrentRaum().getHuman().isGaveItem() == true) {
                 if (Textie.recieveItem(this.getCurrentRaum().getHuman().getRewarditem(), player.getInventory())) {
-                    Textie.printText("Hier, bitte schön.", this);
+                    Textie.printText("Hier, bitte schön.");
                     this.getCurrentRaum().getHuman().setGaveItem(false);
                 } else {
-                    Textie.printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.", this);
+                    Textie.printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
                     this.getCurrentRaum().getHuman().setGaveItem(true);
                 }
             } else {
                 int dialogNumber = this.getCurrentRaum().getHuman().getDialogNumber();
                 switch (dialogNumber) {
                     case 0:
-                        Textie.printText(this.getCurrentRaum().getHuman().getDialog1(), this);
+                        Textie.printText(this.getCurrentRaum().getHuman().getDialog1());
                         dialogNumber = 1;
                         break;
                     case 1:
-                        Textie.printText(this.getCurrentRaum().getHuman().getDialog2(), this);
+                        Textie.printText(this.getCurrentRaum().getHuman().getDialog2());
                         dialogNumber = 0;
                         break;
                 }
             }
         } else {
-            Textie.printText(this.getCurrentRaum().getHuman().getQuestText(), this);
+            Textie.printText(this.getCurrentRaum().getHuman().getQuestText());
         }
     }
 

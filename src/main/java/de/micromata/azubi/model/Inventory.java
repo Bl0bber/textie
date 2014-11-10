@@ -87,10 +87,10 @@ public class Inventory implements Serializable {
         if (this.items.size() > 0) {
             for (Item items : this.items) {
                 String objectName = items.getName();
-                Textie.printText("\t" + objectName, dungeon);
+                Textie.printText("\t" + objectName);
             }
         } else {
-            Textie.printText("Nichts.", dungeon);
+            Textie.printText("Nichts.");
         }
     }
 

@@ -55,11 +55,11 @@ public class Raum implements Serializable{
         if (roomNumber == 3) {
             ToggleItem fackel = (ToggleItem) inventory.findItemByName("Fackel");
             if (fackel != null && fackel.getState() == true) {
-                Textie.printText("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.", dungeon);
+                Textie.printText("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
                 fackel.setState(false);
             }
         }
-        Textie.printText(willkommensNachricht, dungeon);
+        Textie.printText(willkommensNachricht);
         Textie.warten(this.dungeon, withPrompt);
     }
 

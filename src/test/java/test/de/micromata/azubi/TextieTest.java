@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import de.micromata.azubi.DiagnoseSystemConsole;
 import de.micromata.azubi.Textie;
 import de.micromata.azubi.model.Dungeon;
 
@@ -29,7 +30,9 @@ public class TextieTest {
 	@Before
 	public void testBefore() throws Exception {
 		dungeon = Dungeon.createDungeon();
-		Textie.diag = true;
+		DiagnoseSystemConsole dc = new DiagnoseSystemConsole(dungeon);
+		Textie.initTextie(dc);
+//		Textie.diag = true;
 	}
 
 	/**
